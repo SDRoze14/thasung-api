@@ -1,0 +1,22 @@
+{
+  "name": "api-thasung",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.6",
+    "nodemon": "^2.0.4",
+    "slugify": "^1.4.5",
+    "validator": "^13.1.17"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "prod": "SET NODE_ENV=production & nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
