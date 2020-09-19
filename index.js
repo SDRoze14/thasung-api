@@ -20,6 +20,11 @@ connectDB();
 
 app.use(express.json())
 
+// router
+const medicalRecord = require('./routes/meidcalRecord.router')
+
+app.use('/api/v1', medicalRecord)
+// -------------------------
 app.all('*', (req, res, next) => {
   next(new ErrorHandler(`${req.originalUrl} route not found`, 404))
 })
