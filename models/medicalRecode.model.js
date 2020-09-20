@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const slugify = require('slugify')
 
 const MedicalRecordSchema = new mongoose.Schema({
   title: {
@@ -88,6 +87,11 @@ const MedicalRecordSchema = new mongoose.Schema({
   update_at: {
     type: Date,
     default: Date.now
+  },
+  record_by: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'user',
+    required: true
   }
 })
 

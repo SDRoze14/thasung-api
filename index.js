@@ -3,6 +3,7 @@ const express = require('express');
 const app = express()
 
 const dotenv = require('dotenv')
+const cookieParser = require('cookie-parser')
 
 const connectDB = require('./config/db')
 const errorMiddleware = require('./middlewares/errors')
@@ -11,7 +12,7 @@ const ErrorHandler = require('./utils/errorHandler')
 dotenv.config({path: './config/config.env'})
 
 process.on('uncaughtException', err => {
-  console.log(`ERROR: ${err.message}`)
+  console.log(`ERROR: ${err.stack}`)
   console.log('Shutting down the server due to uncaught exception.')
   process.exit(1)
 })
@@ -20,14 +21,20 @@ connectDB();
 
 app.use(express.json())
 
+// cookie
+app.use(cookieParser())
+
 // router
 const medicalRecord = require('./routes/meidcalRecord.router')
-
+const auth = require('./routes/auth.router')
 app.use('/api/v1', medicalRecord)
+app.use('/api/v1', auth)
 // -------------------------
 app.all('*', (req, res, next) => {
   next(new ErrorHandler(`${req.originalUrl} route not found`, 404))
 })
+
+app.use(errorMiddleware)
 
 const PORT = process.env.PORT
 const server = app.listen(PORT, () => {

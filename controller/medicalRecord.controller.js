@@ -35,6 +35,8 @@ exports.getMedicalRecord = catchAsyncErrors(async(req, res, next) => {
 })
 
 exports.newMedicalRecord = catchAsyncErrors(async(req, res, next) => {
+
+  req.body.record_by = req.user.id
   const medicalRecode = await MedicalRecord.create(req.body)
 
   res.status(200).json({
@@ -44,14 +46,16 @@ exports.newMedicalRecord = catchAsyncErrors(async(req, res, next) => {
   })
 })
 
-exports.updateMEdicalRecord = catchAsyncErrors(async(req, res, next) => {
+exports.updateMedicalRecord = catchAsyncErrors(async(req, res, next) => {
   let medicalRecode = await MedicalRecord.findById(req.params.id)
 
   if (!medicalRecode) {
     return next(new ErrorHandler('Medical Record no found', 404))
   }
 
-  medicalRecode = await MedicalRecord.findByIdAndUpdate(req.params, req.body, {
+  req.body.update_at = Date.now()
+
+  medicalRecode = await MedicalRecord.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
     useFindAndModify: false
