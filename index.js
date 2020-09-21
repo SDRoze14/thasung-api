@@ -1,4 +1,4 @@
-const {exception}=require('console');
+// const {exception}=require('console');
 const express = require('express');
 const app = express()
 
@@ -27,8 +27,11 @@ app.use(cookieParser())
 // router
 const medicalRecord = require('./routes/meidcalRecord.router')
 const auth = require('./routes/auth.router')
+const user = require('./routes/user.router')
+
 app.use('/api/v1', medicalRecord)
 app.use('/api/v1', auth)
+app.use('/api/v1', user)
 // -------------------------
 app.all('*', (req, res, next) => {
   next(new ErrorHandler(`${req.originalUrl} route not found`, 404))

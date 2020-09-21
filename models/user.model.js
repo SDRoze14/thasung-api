@@ -5,10 +5,6 @@ const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
 
 const UserSchema = new mongoose.Schema({
-  // id: {
-  //   type: String,
-  //   required: [true]
-  // },
   title: {
     type: String,
     required: [true, 'กรุณากรอกคำนำหน้าชื่อ']
@@ -48,6 +44,10 @@ const UserSchema = new mongoose.Schema({
   phone: {
     type: String,
     required: [true, 'กรุณากรอกหมายเลขโทรศัพท์มือถือ']
+  },
+  create_at: {
+    type: Date,
+    default: Date.now
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date
