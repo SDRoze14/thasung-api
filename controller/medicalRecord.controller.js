@@ -22,7 +22,10 @@ exports.getAllMedicalRecord = catchAsyncErrors(async(req, res, next) => {
 })
 
 exports.getMedicalRecord = catchAsyncErrors(async(req, res, next) => {
-  const medicalRecode = await MedicalRecord.find({_id: req.params.id})
+  const medicalRecode = await MedicalRecord.find({_id: req.params.id}).populate({
+    path: 'record_by',
+    select: 'first last'
+  })
 
   if (!medicalRecode || medicalRecode.length === 0) {
     return next(new ErrorHandler('Medical Record no found', 404));

@@ -5,14 +5,22 @@ const {
   getUserProfile,
   updatePassword,
   updateUser,
-  deleteUser
+  deleteUser,
+  getUser,
+  deleteUserAdmin
 } = require('../controller/user.controller')
 
-const { isAuthUser } = require('../middlewares/auth.middleware')
+const { isAuthUser, authorizaRoles } = require('../middlewares/auth.middleware')
 
-router.route('/me').get(isAuthUser, getUserProfile);
-router.route('/password/change').put(isAuthUser, updatePassword);
-router.route('/me/update').put(isAuthUser, updateUser);
-router.route('/me/delete').delete(isAuthUser, deleteUser);
+router.use(isAuthUser)
+
+router.route('/me').get(getUserProfile);
+router.route('/password/change').put(updatePassword);
+router.route('/me/update').put(updateUser);
+router.route('/me/delete').delete(deleteUser);
+
+// super and doctor
+router.route('/users').get(authorizaRoles('super', 'doctor'), getUser);
+router.route('/users/:id').delete(authorizaRoles('super', 'doctor'), deleteUserAdmin);
 
 module.exports = router

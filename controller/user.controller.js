@@ -2,10 +2,16 @@ const User = require('../models/user.model')
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 const ErrorHandler = require('../utils/errorHandler')
 const sendToken = require('../utils/jwtToken')
+const path = require('path')
+const APIFilters=require('../utils/apifilters')
 
 // get me
 exports.getUserProfile = catchAsyncErrors(async(req, res, next) => {
   const user = await User.findById(req.user.id)
+    .populate({
+      path: 'medicalRecordsPush',
+      select: 'citizen_id create_at'
+    })
 
   res.status(200).json({
     success: true,
@@ -65,4 +71,38 @@ exports.deleteUser = catchAsyncErrors(async(req, res, next) => {
     success: true,
     message: 'Your account has been deleted'
   })
+})
+
+// get all user only doctor super
+exports.getUser = catchAsyncErrors(async(req, res, next) => {
+  const apifilters = new APIFilters(User.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .pagination();
+
+  const users = await apifilters.query;
+
+  res.status(200).json({
+    success: true,
+    results: users.length,
+    data: users
+  })
+})
+
+// Delete user only super doctor
+exports.deleteUserAdmin = catchAsyncErrors(async(req ,res ,next) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return next(new ErrorHandler('User ont found'), 404)
+  }
+
+  user.remove()
+
+  res.status(200).json({
+    success: true,
+    message: 'User is deleted'
+  })
+
 })

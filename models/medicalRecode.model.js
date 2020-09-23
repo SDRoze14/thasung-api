@@ -90,9 +90,9 @@ const MedicalRecordSchema = new mongoose.Schema({
   },
   record_by: {
     type: mongoose.Schema.ObjectId,
-    ref: 'user',
+    ref: 'User',
     required: true
   }
 })
 
-module.exports = mongoose.model('medicalrecord', MedicalRecordSchema)
+module.exports = mongoose.model('MedicalRecord', MedicalRecordSchema)
