@@ -4,6 +4,13 @@ const app = express()
 
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser')
+const rateLimit = require('express-rate-limit')
+const helmet = require('helmet')
+const mongoSanitize = require('express-mongo-sanitize')
+const xssClean = require('xss-clean')
+const hpp = require('hpp')
+const cors = require('cors')
+const bodyParser = require('body-parser')
 
 const connectDB = require('./config/db')
 const errorMiddleware = require('./middlewares/errors')
@@ -19,10 +26,41 @@ process.on('uncaughtException', err => {
 
 connectDB();
 
+// Set body parser
+app.use(bodyParser.urlencoded({ extended: true}))
+
+app.use(express.static('public'))
+
+// setup security header
+app.use(helmet())
+
+// body json
 app.use(express.json())
 
 // cookie
 app.use(cookieParser())
+
+// Sanitize data
+app.use(mongoSanitize())
+
+// xss
+app.use(xssClean())
+
+// Prevent parameter
+app.use(hpp({
+  whitelist: ['']
+}))
+
+// rate limit
+const limiter = rateLimit({
+  windowMs: 10*60*1000, // 10 min
+  max: 100
+})
+
+// Setup CORS
+app.use(cors())
+
+app.use(limiter)
 
 // router
 const medicalRecord = require('./routes/meidcalRecord.router')
