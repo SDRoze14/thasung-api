@@ -28,7 +28,7 @@ exports.getMedicalRecord = catchAsyncErrors(async(req, res, next) => {
   })
 
   if (!medicalRecode || medicalRecode.length === 0) {
-    return next(new ErrorHandler('Medical Record no found', 404));
+    return next(new ErrorHandler('Medical Record not found', 404));
   }
 
   res.status(200).json({
@@ -53,7 +53,7 @@ exports.updateMedicalRecord = catchAsyncErrors(async(req, res, next) => {
   let medicalRecode = await MedicalRecord.findById(req.params.id)
 
   if (!medicalRecode) {
-    return next(new ErrorHandler('Medical Record no found', 404))
+    return next(new ErrorHandler('Medical Record not found', 404))
   }
 
   req.body.update_at = Date.now()

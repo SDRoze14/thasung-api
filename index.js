@@ -66,10 +66,15 @@ app.use(limiter)
 const medicalRecord = require('./routes/meidcalRecord.router')
 const auth = require('./routes/auth.router')
 const user = require('./routes/user.router')
+const medicalSupplies = require('./routes/medicalSuppies.router')
+const suppliesActivities = require('./routes/suppliesActivities.router')
 
 app.use('/api/v1', medicalRecord)
 app.use('/api/v1', auth)
 app.use('/api/v1', user)
+app.use('/api/v1', medicalSupplies)
+app.use('/api/v1', suppliesActivities)
+
 // -------------------------
 app.all('*', (req, res, next) => {
   next(new ErrorHandler(`${req.originalUrl} route not found`, 404))
