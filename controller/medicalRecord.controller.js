@@ -22,7 +22,7 @@ exports.getAllMedicalRecord = catchAsyncErrors(async(req, res, next) => {
 })
 
 exports.getMedicalRecord = catchAsyncErrors(async(req, res, next) => {
-  const medicalRecode = await MedicalRecord.find({_id: req.params.id}).populate({
+  const medicalRecode = await MedicalRecord.findById(req.params.id).populate({
     path: 'record_by',
     select: 'first last'
   })
