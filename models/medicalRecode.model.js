@@ -36,9 +36,17 @@ const MedicalRecordSchema = new mongoose.Schema({
       message: 'กรุณาเลือกสถานภาพสมรส'
     }
   },
+  nationality: {
+    type: String,
+    required: [true, 'กรุณากรอกสัญชาติ']
+  },
   address: {
     type: String,
     required: [true, 'กรุณากรอกที่อยู่']
+  },
+  moo: {
+    type: String,
+    required: [true, 'กรุณากรอกหมู่ที่']
   },
   soi: {
     type: String,
