@@ -29,11 +29,11 @@ const MedicalRecordSchema = new mongoose.Schema({
   age: {
     type: String,
   },
-  status: {
+  sex: {
     type: String,
     enum: {
-      values: ['single', 'married', 'divorced'],
-      message: 'กรุณาเลือกสถานภาพสมรส'
+      values: ['male', 'female'],
+      message: 'กรุณาเลือกเพศสภาพ'
     }
   },
   blood: {
@@ -74,10 +74,6 @@ const MedicalRecordSchema = new mongoose.Schema({
   province: {
     type: String,
     required: [true, 'กรุณากรอกจังหวัด']
-  },
-  zip: {
-    type: String,
-    required: [true, 'กรุณากรอกรหัสไปรษณีย์']
   },
   phone: {
     type: String,
