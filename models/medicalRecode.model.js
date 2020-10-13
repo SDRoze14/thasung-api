@@ -39,7 +39,7 @@ const MedicalRecordSchema = new mongoose.Schema({
   blood: {
     type: String,
     enum: {
-      values: ['A', 'B', 'AB', 'O'],
+      values: ['A', 'B', 'AB', 'O', 'ไม่ทราบหมู่เลือด'],
       message: 'กรุณาเลือกกรุ๊ปเลือด'
     }
   },
