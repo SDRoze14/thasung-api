@@ -4,7 +4,7 @@ const MedicalRecordSchema = new mongoose.Schema({
   title: {
     type: String,
     enum: {
-      values: ['Master', 'Mr', 'Mrs', 'Miss'],
+      values: ['นาย', 'นาง', 'นางสาว', 'ดช.', 'กญ.'],
       message: 'กรุณาเลือกคำนำหน้าชื่อ'
     }
   },
@@ -32,7 +32,7 @@ const MedicalRecordSchema = new mongoose.Schema({
   sex: {
     type: String,
     enum: {
-      values: ['male', 'female'],
+      values: ['ชาย', 'หญิง'],
       message: 'กรุณาเลือกเพศสภาพ'
     }
   },
