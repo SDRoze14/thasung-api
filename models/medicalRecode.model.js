@@ -36,6 +36,13 @@ const MedicalRecordSchema = new mongoose.Schema({
       message: 'กรุณาเลือกสถานภาพสมรส'
     }
   },
+  blood: {
+    type: String,
+    enum: {
+      values: ['A', 'B', 'AB', 'O'],
+      message: 'กรุณาเลือกกรุ๊ปเลือด'
+    }
+  },
   nationality: {
     type: String,
     required: [true, 'กรุณากรอกสัญชาติ']
