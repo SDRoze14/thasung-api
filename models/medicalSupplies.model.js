@@ -1,13 +1,33 @@
 const mongoose = require('mongoose')
 
 const MedicalSupplies = new mongoose.Schema({
-  name: {
+  medical_name: {
     type: String,
-    required: [true, '']
+    required: [true, 'กรุณากรอกชื่อยาทางการแพทย์']
+  },
+  name: {
+    type: String
   },
   amount: {
     type: Number,
     required: [true, '']
+  },
+  unit: {
+    type: String,
+    enum: {
+      values: ['เม็ด', 'แผง', 'กระปุก', 'ขวด', 'ซอง'],
+      message: 'กรุณาดลือกหน่วยยา'
+    }
+  },
+  date_add: {
+    type: Date,
+    required: [true, 'กรุณาเลือกวัน/เดือน/ปีเข้าคลัง']
+  },
+  from: {
+    type: String
+  },
+  price_for_unit: {
+    type: String
   },
   create_at: {
     type: Date,
