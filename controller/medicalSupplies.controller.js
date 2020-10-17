@@ -1,5 +1,5 @@
 const MedicalSupplies = require('../models/medicalSupplies.model')
-const SuppliesActivities = require('../models/suppliesActivities.model')
+const Activities = require('../models/activities.model')
 
 const ErrorHandler = require('../utils/errorHandler')
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
@@ -25,10 +25,12 @@ exports.getAllMedicalSupplies = catchAsyncErrors(async(req, res, next) => {
 })
 
 exports.newMedicalSupply = catchAsyncErrors(async(req, res, next) => {
+  req.body.price_total = req.body.amount * req.body.price_for_unit
   await MedicalSupplies.create(req.body)
     .then(async response => {
-      await SuppliesActivities.create({
-        activities: 'add  ',
+      await Activities.create({
+        activities: 'add',
+        from: 'medical-supply',
         data: response,
         data_id: response.id,
         act_by: req.user.id
@@ -69,8 +71,9 @@ exports.updateMedicalSupply = catchAsyncErrors(async(req, res, next) => {
     runValidators: true,
     useFindAndModify: false
   }).then(async response => {
-    await SuppliesActivities.create({
+    await Activities.create({
       activities: 'update',
+      from: 'medical-supply',
       data: response,
       data_id: response.id,
       act_by: req.user.id
@@ -92,8 +95,9 @@ exports.deleteMedicalSupply = catchAsyncErrors(async(req, res, next) => {
   } else {
     await MedicalSupplies.findByIdAndDelete(req.params.id)
       .then(async response => {
-        await SuppliesActivities.create({
+        await Activities.create({
           activities: 'delete',
+          from: 'medical-supply',
           data: response,
           data_id: response.id,
           act_by: req.user.id

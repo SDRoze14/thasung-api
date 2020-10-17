@@ -27,7 +27,10 @@ const MedicalSupplies = new mongoose.Schema({
     type: String
   },
   price_for_unit: {
-    type: String
+    type: Number
+  },
+  price_total: {
+    type: Number
   },
   create_at: {
     type: Date,

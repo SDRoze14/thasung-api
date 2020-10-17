@@ -1,18 +1,19 @@
-const MedicalRecord = require('../models/medicalRecode.model')
+const MedicalRecord=require('../models/medicalRecode.model')
+const Activities=require('../models/activities.model')
 
-const ErrorHandler = require('../utils/errorHandler')
-const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
-const APIFilters = require('../utils/apifilters')
+const ErrorHandler=require('../utils/errorHandler')
+const catchAsyncErrors=require('../middlewares/catchAsyncErrors')
+const APIFilters=require('../utils/apifilters')
 
-exports.getAllMedicalRecord = catchAsyncErrors(async(req, res, next) => {
-  const apifilters = new APIFilters(MedicalRecord.find(), req.query)
+exports.getAllMedicalRecord=catchAsyncErrors(async (req,res,next) => {
+  const apifilters=new APIFilters(MedicalRecord.find(),req.query)
     .filter()
     .sort()
     .limitFields()
     .searchByQuery()
     .pagination()
 
-  const medicalRecodes = await apifilters.query
+  const medicalRecodes=await apifilters.query
 
   res.status(200).json({
     success: true,
@@ -21,14 +22,17 @@ exports.getAllMedicalRecord = catchAsyncErrors(async(req, res, next) => {
   })
 })
 
-exports.getMedicalRecord = catchAsyncErrors(async(req, res, next) => {
-  const medicalRecode = await MedicalRecord.findById(req.params.id).populate({
+exports.getMedicalRecord=catchAsyncErrors(async (req,res,next) => {
+  const medicalRecode=await MedicalRecord.findById(req.params.id).populate({
     path: 'record_by',
     select: 'first last'
+  }).populate({
+    path: 'SymptomPush',
+    select: 'detail create_at'
   })
 
-  if (!medicalRecode || medicalRecode.length === 0) {
-    return next(new ErrorHandler('Medical Record not found', 404));
+  if(!medicalRecode||medicalRecode.length===0) {
+    return next(new ErrorHandler('Medical Record not found',404));
   }
 
   res.status(200).json({
@@ -37,51 +41,78 @@ exports.getMedicalRecord = catchAsyncErrors(async(req, res, next) => {
   })
 })
 
-exports.newMedicalRecord = catchAsyncErrors(async(req, res, next) => {
+exports.newMedicalRecord=catchAsyncErrors(async (req,res,next) => {
 
-  req.body.record_by = req.user.id
-  const medicalRecode = await MedicalRecord.create(req.body)
-
-  res.status(200).json({
-    success: true,
-    message: 'Medical Record created',
-    data: medicalRecode
-  })
+  req.body.record_by=req.user.id
+  await MedicalRecord.create(req.body)
+    .then(async response => {
+      await Activities.create({
+        activities: 'add',
+        from: 'medical-record',
+        data: response,
+        data_id: response.id,
+        act_by: req.user.id
+      }).then(() => {
+        res.status(200).json({
+          sucess: true,
+          message: 'Medical Record created',
+          data: response,
+        })
+      })
+    })
 })
 
-exports.updateMedicalRecord = catchAsyncErrors(async(req, res, next) => {
-  let medicalRecode = await MedicalRecord.findById(req.params.id)
+exports.updateMedicalRecord=catchAsyncErrors(async (req,res,next) => {
+  let medicalRecode=await MedicalRecord.findById(req.params.id)
 
-  if (!medicalRecode) {
-    return next(new ErrorHandler('Medical Record not found', 404))
+  if(!medicalRecode) {
+    return next(new ErrorHandler('Medical Record not found',404))
   }
 
-  req.body.update_at = Date.now()
+  req.body.update_at=Date.now()
 
-  medicalRecode = await MedicalRecord.findByIdAndUpdate(req.params.id, req.body, {
+  await MedicalRecord.findByIdAndUpdate(req.params.id,req.body,{
     new: true,
     runValidators: true,
     useFindAndModify: false
-  })
-
-  res.status(200).json({
-    success: true,
-    message: 'Medical Record is updated',
-    data: medicalRecode
+  }).then(async response => {
+    await Activities.create({
+      activities: 'update',
+      from: 'medical-record',
+      data: response,
+      data_id: response.id,
+      act_by: req.user.id
+    }).then(() => {
+      res.status(200).json({
+        sucess: true,
+        message: 'Medical Record created',
+        data: response,
+      })
+    })
   })
 })
 
-exports.deleteMedicalRecord = catchAsyncErrors(async(req, res, next) => {
-  let medicalRecode = await MedicalRecord.findById(req.params.id)
+exports.deleteMedicalRecord=catchAsyncErrors(async (req,res,next) => {
+  let medicalRecode=await MedicalRecord.findById(req.params.id)
 
   if(!medicalRecode) {
-    return next(new ErrorHandler('Medical Record not found', 404))
+    return next(new ErrorHandler('Medical Record not found',404))
   }
 
-  medicalRecode = await MedicalRecord.findByIdAndDelete(req.params.id)
-
-  res.status(200).json({
-    success: true,
-    message: 'Medical Record is deleted'
-  })
+  await MedicalRecord.findByIdAndDelete(req.params.id)
+    .then(async response => {
+      await Activities.create({
+        activities: 'delete',
+        from: 'medical-record',
+        data: response,
+        data_id: response.id,
+        act_by: req.user.id
+      }).then(() => {
+        res.status(200).json({
+          sucess: true,
+          message: 'Medical Record created',
+          data: response,
+        })
+      })
+    })
 })

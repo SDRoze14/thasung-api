@@ -1,20 +1,21 @@
 const mongoose = require('mongoose')
 
-const SuppliesActivities = new mongoose.Schema({
+const ActivitiesSchema = new mongoose.Schema({
   activities: {
     type: String,
     eunm: {
       values: ['add', 'update', 'delete', ]
     }
   },
+  from: {
+    type: String
+  },
   data: {
     type: Object,
-    ref: 'MedicalSupplies',
     require: true
   },
   data_id: {
     type: mongoose.Schema.ObjectId,
-    ref: 'MedicalSupplies',
     require: true
   },
   act_by: {
@@ -28,4 +29,4 @@ const SuppliesActivities = new mongoose.Schema({
   }
 })
 
-module.exports = mongoose.model('SuppliesActivities', SuppliesActivities)
+module.exports = mongoose.model('Activities', ActivitiesSchema)
