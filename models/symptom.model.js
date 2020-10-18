@@ -22,6 +22,10 @@ const SymptomSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  name_create: {
+    type: String,
+    ref: 'User'
+  },
   initial_by: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
@@ -30,6 +34,11 @@ const SymptomSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
     default: null
+  },
+  predicate_at: Date,
+  name_predicate: {
+    type: String,
+    ref: 'User'
   }
 })
 
