@@ -4,7 +4,7 @@ const ActivitiesSchema = new mongoose.Schema({
   activities: {
     type: String,
     eunm: {
-      values: ['add', 'update', 'delete', ]
+      values: ['add', 'update', 'delete' ]
     }
   },
   from: {

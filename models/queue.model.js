@@ -9,8 +9,11 @@ const QueueSchema = new mongoose.Schema({
     ref: 'MedicalRecord'
   },
   approve: {
-    type: Boolean,
-    default: false
+    type: String,
+    enum: {
+      values: ['wait', 'success', 'cancel']
+    },
+    default: 'wait'
   },
   symptom: {
     type: mongoose.Schema.ObjectId,
