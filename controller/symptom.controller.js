@@ -20,11 +20,11 @@ exports.newSymptom = catchAsyncErrors(async(req, res, next) => {
   let q
 
   if (i > 9) {
-    q = `${date}0${i++}`
+    q = `${date}-0${i++}`
   } else if (i > 99) {
-    q = `${date}${i++}`
+    q = `${date}-${i++}`
   } else {
-    q = `${date}00${i++}`
+    q = `${date}-00${i++}`
   }
 
   req.body.create_by = req.user.id
@@ -56,6 +56,10 @@ exports.getSymptom = catchAsyncErrors(async(req, res, next) => {
   const symptom = await await Symptom.findById(req.params.id).populate({
     path: 'medicalRecord_id',
     select: 'title first last citizen_id birth age sex blood nationality disease drug_allergy address moo soi road tambon distric province phone'
+  })
+  .populate({
+    path: 'drugPush',
+    select: 'name_drug amount status order_by_name order_at paid_at paid_by_name'
   })
 
   if(!symptom||symptom.length===0) {

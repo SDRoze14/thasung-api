@@ -70,6 +70,8 @@ const medicalSupplies = require('./routes/medicalSuppies.router')
 const activities = require('./routes/activities.router')
 const Symptom = require('./routes/symptom.router')
 const Queue = require('./routes/queue.router')
+const DrugList = require('./routes/drugLIst.router')
+const Appointment = require('./routes/appointment.router')
 
 app.use('/api/v1', medicalRecord)
 app.use('/api/v1', auth)
@@ -78,6 +80,8 @@ app.use('/api/v1', medicalSupplies)
 app.use('/api/v1', activities)
 app.use('/api/v1', Symptom)
 app.use('/api/v1', Queue)
+app.use('/api/v1', DrugList)
+app.use('/api/v1', Appointment)
 
 // -------------------------
 app.all('*', (req, res, next) => {
