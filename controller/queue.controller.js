@@ -5,7 +5,7 @@ const ErrorHandler=require('../utils/errorHandler')
 
 exports.getAllQueue = catchAsyncErrors(async(req, res, next) => {
   const queue = await Queue.find().populate({
-    path: 'MedicalRecord',
+    path: 'medicalRecode',
     select: 'first last'
   })
 
