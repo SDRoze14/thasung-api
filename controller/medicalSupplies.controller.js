@@ -25,8 +25,7 @@ exports.getAllMedicalSupplies = catchAsyncErrors(async(req, res, next) => {
 })
 
 exports.newMedicalSupply = catchAsyncErrors(async(req, res, next) => {
-  req.body.price_total = await req.body.amount * req.body.price_for_unit
-  req.body.total = await req.body.amount
+  req.body.price_total = await req.body.total * req.body.price_for_unit
   await MedicalSupplies.create(req.body)
     .then(async response => {
       await Activities.create({
@@ -92,6 +91,8 @@ exports.updateAmountMedicalSupply = catchAsyncErrors(async(req, res, next) => {
 
 exports.updateMedicalSupply = catchAsyncErrors(async(req, res, next) => {
   let medicalSupplies = await MedicalSupplies.findById(req.params.id)
+  req.body.amount = await 0;
+  req.body.price_total = await 0
 
   if(!medicalSupplies) {
     return next(new ErrorHandler('Medical Supply not found', 404))
