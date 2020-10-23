@@ -13,7 +13,6 @@ exports.getAllMedicalSupplies = catchAsyncErrors(async(req, res, next) => {
     .sort()
     .limitFields()
     .searchByQuery()
-    .pagination()
 
   const medicalSupplies = await apifilters.query
 
