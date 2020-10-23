@@ -25,6 +25,7 @@ exports.getAllMedicalSupplies = catchAsyncErrors(async(req, res, next) => {
 })
 
 exports.newMedicalSupply = catchAsyncErrors(async(req, res, next) => {
+  req.body.amount = await req.body.total
   req.body.price_total = await req.body.total * req.body.price_for_unit
   await MedicalSupplies.create(req.body)
     .then(async response => {
@@ -66,7 +67,7 @@ exports.updateAmountMedicalSupply = catchAsyncErrors(async(req, res, next) => {
 
   req.body.update_at = await Date.now()
   req.body.total  = await medicalSupplies.total + req.body.amount
-  req.body.price_total = await req.body.amount * req.body.price_for_unit
+  req.body.price_total = await req.body.amount * medicalSupplies.price_for_unit
 
   await MedicalSupplies.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
