@@ -4,7 +4,10 @@ const catchAsyncErrors=require('../middlewares/catchAsyncErrors')
 const ErrorHandler=require('../utils/errorHandler')
 
 exports.getAllQueue = catchAsyncErrors(async(req, res, next) => {
-  const queue = await Queue.find()
+  const queue = await Queue.find().populate({
+    path: 'medicalRecode',
+    select: 'first last'
+  })
 
   res.status(200).json({
     success: true,

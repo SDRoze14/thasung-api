@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const QueueSchema = new mongoose.Schema({
   queue: {
-    type: Number
+    type: String
   },
   medicalRecode: {
     type: mongoose.Schema.ObjectId,
