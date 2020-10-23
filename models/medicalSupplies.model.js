@@ -10,7 +10,10 @@ const MedicalSupplies = new mongoose.Schema({
   },
   amount: {
     type: Number,
-    required: [true, '']
+    required: [true, 'กรุณากรอกจำนวนยา']
+  },
+  total: {
+    type: Number
   },
   unit: {
     type: String,
