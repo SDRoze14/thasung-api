@@ -5,7 +5,10 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 const APIFilters = require('../utils/apifilters')
 
 exports.getAllActivities = catchAsyncErrors(async(req, res, next) => {
-  const apifilters = new APIFilters(Activities.find(), req.query)
+  const apifilters = new APIFilters(Activities.find().populate({
+    path: 'act_by',
+    select: 'title first last'
+  }), req.query)
     .filter()
     .sort()
     .limitFields()
