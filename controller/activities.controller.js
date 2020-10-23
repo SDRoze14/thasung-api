@@ -13,7 +13,6 @@ exports.getAllActivities = catchAsyncErrors(async(req, res, next) => {
     .sort()
     .limitFields()
     .searchByQuery()
-    .pagination()
 
   const activities = await apifilters.query
 
