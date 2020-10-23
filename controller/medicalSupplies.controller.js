@@ -45,7 +45,7 @@ exports.newMedicalSupply = catchAsyncErrors(async(req, res, next) => {
 })
 
 exports.getMedicalSupplies = catchAsyncErrors(async(req, res, next) => {
-  const medicalSupplies = await MedicalSupplies.find({_id: req.params.id})
+  const medicalSupplies = await MedicalSupplies.find(req.params.id)
 
   if(!medicalSupplies || medicalSupplies.length === 0) {
     return next(new ErrorHandler('Midical Supply not found', 404))
