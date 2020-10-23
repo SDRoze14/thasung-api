@@ -18,7 +18,7 @@ exports.getAllMedicalSupplies = catchAsyncErrors(async(req, res, next) => {
   const medicalSupplies = await apifilters.query
 
   res.status(200).json({
-    sucess: true,
+    success: true,
     results: medicalSupplies.length,
     data: medicalSupplies
   })
@@ -37,7 +37,7 @@ exports.newMedicalSupply = catchAsyncErrors(async(req, res, next) => {
         act_by: req.user.id
       }).then(() => {
         res.status(200).json({
-          sucess: true,
+          success: true,
           message: 'Medical Supply created',
           data: response,
         })
@@ -82,7 +82,7 @@ exports.updateMedicalSupply = catchAsyncErrors(async(req, res, next) => {
       act_by: req.user.id
     }).then(() => {
       res.status(200).json({
-        sucess: true,
+        success: true,
         message: 'Medical Supply is updated',
         data: response
       })
@@ -106,7 +106,7 @@ exports.deleteMedicalSupply = catchAsyncErrors(async(req, res, next) => {
           act_by: req.user.id
         }).then(() => {
           res.status(200).json({
-            sucess: true,
+            success: true,
             message: 'Medical Supply is deleted'
           })
         })
