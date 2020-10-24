@@ -40,7 +40,7 @@ const UserSchema=new mongoose.Schema(
     },
     doctor_id: {
       type: String,
-      required: [true,'กรุณากรอกหมายเลลขประจำตัวแพทย์']
+      required: [true,'กรุณากรอกหมายเลขประจำตัวแพทย์']
     },
     phone: {
       type: String,

@@ -9,9 +9,9 @@ const {
   logout
 } = require('../controller/auth.controller')
 
-const { isAuthUser } = require('../middlewares/auth.middleware');
+const { isAuthUser, authorizaRoles } = require('../middlewares/auth.middleware');
 
-router.route('/newUser').post(newUser)
+router.route('/newUser').post(authorizaRoles('super'), newUser)
 router.route('/login').post(login)
 router.route('/password/forgot').post(forgotPassword)
 router.route('/password/reset/:token').put(resetPassword)
