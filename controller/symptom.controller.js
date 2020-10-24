@@ -53,7 +53,7 @@ exports.newSymptom = catchAsyncErrors(async(req, res, next) => {
 })
 
 exports.getSymptom = catchAsyncErrors(async(req, res, next) => {
-  const symptom = await await Symptom.findById(req.params.id).populate({
+  const symptom = await Symptom.findById(req.params.id).populate({
     path: 'medicalRecord_id',
     select: 'title first last citizen_id birth age sex blood nationality disease drug_allergy address moo soi road tambon distric province phone'
   })

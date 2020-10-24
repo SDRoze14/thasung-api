@@ -2,7 +2,6 @@ const User = require('../models/user.model')
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 const ErrorHandler = require('../utils/errorHandler')
 const sendToken = require('../utils/jwtToken')
-const path = require('path')
 const APIFilters=require('../utils/apifilters')
 
 // get me
@@ -92,10 +91,7 @@ exports.getUser = catchAsyncErrors(async(req, res, next) => {
 
 exports.getOneUser = catchAsyncErrors(async(req, res, next) => {
 
-  const user = await User.findById(req.params.id).populated({
-    path: 'ActivitiesPush',
-    select: 'activities from data_id time'
-  })
+  const user = await User.findById(req.params.id)
 
   if (!user) {
     return next(new ErrorHandler('User not found'), 404)
