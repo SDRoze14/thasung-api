@@ -90,6 +90,23 @@ exports.getUser = catchAsyncErrors(async(req, res, next) => {
   })
 })
 
+exports.getOneUser = catchAsyncErrors(async(req, res, next) => {
+
+  const user = await (await User.findById(req.params.id)).populated({
+    path: 'ActivitiesPush',
+    select: 'activities from data_id time'
+  })
+
+  if (!user) {
+    return next(new ErrorHandler('User ont found'), 404)
+  }
+
+  res.status(200).json({
+    success: true,
+    data: user
+  })
+})
+
 // Delete user only super doctor
 exports.deleteUserAdmin = catchAsyncErrors(async(req ,res ,next) => {
   const user = await User.findById(req.params.id);

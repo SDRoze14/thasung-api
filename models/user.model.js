@@ -104,4 +104,11 @@ UserSchema.virtual('medicalRecordsPush', {
   justOne: false
 })
 
+UserSchema.virtual('ActivitiesPush', {
+  ref: 'Activities',
+  localField: '_id',
+  foreignField: 'act_by',
+  justOne: false
+})
+
 module.exports=mongoose.model('User', UserSchema)
