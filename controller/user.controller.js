@@ -92,13 +92,13 @@ exports.getUser = catchAsyncErrors(async(req, res, next) => {
 
 exports.getOneUser = catchAsyncErrors(async(req, res, next) => {
 
-  const user = await (await User.findById(req.params.id)).populated({
+  const user = await User.findById(req.params.id).populated({
     path: 'ActivitiesPush',
     select: 'activities from data_id time'
   })
 
   if (!user) {
-    return next(new ErrorHandler('User ont found'), 404)
+    return next(new ErrorHandler('User not found'), 404)
   }
 
   res.status(200).json({
@@ -112,7 +112,7 @@ exports.deleteUserAdmin = catchAsyncErrors(async(req ,res ,next) => {
   const user = await User.findById(req.params.id);
 
   if (!user) {
-    return next(new ErrorHandler('User ont found'), 404)
+    return next(new ErrorHandler('User not found'), 404)
   }
 
   await user.remove()
