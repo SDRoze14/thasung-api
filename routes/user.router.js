@@ -22,7 +22,7 @@ router.route('/me/delete').delete(deleteUser);
 
 // super and doctor
 router.route('/users').get(authorizaRoles('super', 'doctor'), getUser);
-router.route('/users/:id').get(authorizaRoles('super', 'doctor'), getOneUser);
+router.route('/users/:id').get(authorizaRoles('super'), getOneUser);
 router.route('/users/:id').delete(authorizaRoles('super', 'doctor'), deleteUserAdmin);
 
 module.exports = router
