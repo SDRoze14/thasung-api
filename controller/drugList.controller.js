@@ -77,7 +77,7 @@ exports.paidDrug=catchAsyncErrors(async (req,res,next) => {
         let drug_id=await response.supply_id
         await MedicalSupplies.findById(drug_id)
           .then(async resp => {
-            let total_amount=await resp.totalz-response.amount
+            let total_amount=await resp.total-response.amount
             await MedicalSupplies.findByIdAndUpdate(drug_id,{total: total_amount},{
               new: true,
               runValidators: true,
