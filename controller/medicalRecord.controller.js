@@ -28,7 +28,7 @@ exports.getMedicalRecord=catchAsyncErrors(async (req,res,next) => {
     select: 'first last'
   }).populate({
     path: 'SymptomPush',
-    select: 'initial name_create create_at  name_predicate predicate_at'
+    select: 'initial name_create create_at predicate name_predicate predicate_at'
   })
 
   if(!medicalRecode||medicalRecode.length===0) {
