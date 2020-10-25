@@ -11,7 +11,7 @@ const QueueSchema = new mongoose.Schema({
   approve: {
     type: String,
     enum: {
-      values: ['wait', 'success', 'cancel']
+      values: ['wait', 'success', 'cancel', 'await_drug']
     },
     default: 'wait'
   },

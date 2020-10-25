@@ -74,7 +74,7 @@ exports.getSymptom = catchAsyncErrors(async(req, res, next) => {
 
 exports.updateSymptom = catchAsyncErrors(async(req, res, next) => {
   req.body.predicate_by = req.user.id
-  req.body.predicate_at = new Date.now()
+  req.body.predicate_at = new Date()
   req.body.name_predicate = `${req.user.title} ${req.user.first} ${req.user.last}`
   const symptom = await Symptom.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
