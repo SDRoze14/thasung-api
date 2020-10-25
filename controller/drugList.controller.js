@@ -56,7 +56,7 @@ exports.newDrugList=catchAsyncErrors(async (req,res,next) => {
 })
 
 exports.paidDrug=catchAsyncErrors(async (req,res,next) => {
-  req.body.order_at=await Date.now();
+  req.body.paid_at=await Date.now();
   req.body.paid_by=await req.user.id;
   req.body.paid_by_name=await `${req.user.title} ${req.user.first} ${req.user.last}`;
   req.body.status=await true
@@ -77,8 +77,8 @@ exports.paidDrug=catchAsyncErrors(async (req,res,next) => {
         let drug_id=await response.supply_id
         await MedicalSupplies.findById(drug_id)
           .then(async resp => {
-            let total_amount=await resp.amount-response.amount
-            await MedicalSupplies.findByIdAndUpdate(drug_id,{amount: total_amount},{
+            let total_amount=await resp.totalz-response.amount
+            await MedicalSupplies.findByIdAndUpdate(drug_id,{total: total_amount},{
               new: true,
               runValidators: true,
               useFindAndModify: false
