@@ -102,3 +102,16 @@ exports.paidDrug=catchAsyncErrors(async (req,res,next) => {
       })
   }
 })
+
+exports.deleteDrugList = catchAsyncErrors(async(req, res, next) => {
+  const druglist = await DrugList.findByIdAndDelete(req.params.id)
+
+  if(!druglist) {
+    return next(new ErrorHandler('drug list not found',404))
+  }
+
+  res.status(200).json({
+    success: true,
+    message: 'delete drug list successful'
+  })
+})
