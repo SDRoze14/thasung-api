@@ -5,6 +5,10 @@ const AppointmentSchema = new mongoose.Schema({
     type: String,
     required: [true, 'กรุณากรอกชื่องาน']
   },
+  medical_name: {
+    type: String,
+    default: null
+  },
   description: String,
   start: {
     type: Date,
