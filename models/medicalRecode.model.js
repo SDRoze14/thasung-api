@@ -76,6 +76,9 @@ const MedicalRecordSchema=new mongoose.Schema(
       type: String,
       required: [true,'กรุณากรอกจังหวัด']
     },
+    zip: {
+      type: String,
+      required: [true,'กรุณากรอกรหัสไปรณีย์']},
     phone: {
       type: String,
       required: [true,'กรูรากรอกหมายเลขโทรศัพท์มือถือ']
