@@ -5,6 +5,10 @@ const MedicalSupplies = new mongoose.Schema({
     type: String,
     required: [true, 'กรุณากรอกชื่อยาทางการแพทย์']
   },
+  type4 : {
+    type: Boolean,
+    default: false
+  },
   name: {
     type: String
   },
