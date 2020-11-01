@@ -103,9 +103,9 @@ exports.paidDrug=catchAsyncErrors(async (req,res,next) => {
                     order_at: response.order_at,
                     _id: response._id,
                     total: sup_res.total,
-                    number: sub_res.number,
-                    creator: sub_res.creator,
-                    from: sub_res.from
+                    number: sup_res.number,
+                    creator: sup_res.creator,
+                    from: sup_res.from
                   },
                   data_id: response.id,
                   act_by: req.user.id,
