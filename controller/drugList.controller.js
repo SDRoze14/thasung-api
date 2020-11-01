@@ -83,7 +83,8 @@ exports.paidDrug=catchAsyncErrors(async (req,res,next) => {
               runValidators: true,
               useFindAndModify: false
             })
-              .then(async () => {
+              .then(async (sup_res) => {
+                response.type4 = sup_res.type4
                 await Activities.create({
                   activities: 'update',
                   from: 'drug-list',
