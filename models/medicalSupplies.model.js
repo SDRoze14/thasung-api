@@ -12,6 +12,14 @@ const MedicalSupplies = new mongoose.Schema({
   name: {
     type: String
   },
+  number: {
+    type: String,
+    default: null
+  },
+  creator: {
+    type: String,
+    default: null
+  },
   amount: {
     type: Number,
     default: 0
