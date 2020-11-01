@@ -10,6 +10,7 @@ const DrugListSchema = new mongoose.Schema({
     type: String,
     ref: 'MedicalSupplies'
   },
+  type4: Boolean,
   amount: {
     type: Number,
     required: [true, 'กรุณากรอกจำนวนยา']
