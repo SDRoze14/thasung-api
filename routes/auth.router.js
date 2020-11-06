@@ -11,7 +11,7 @@ const {
 
 const { isAuthUser, authorizaRoles } = require('../middlewares/auth.middleware');
 
-router.route('/newUser').post(isAuthUser, authorizaRoles('super'), newUser)
+router.route('/newUser').post(isAuthUser, authorizaRoles('admin'), newUser)
 router.route('/login').post(login)
 router.route('/password/forgot').post(forgotPassword)
 router.route('/password/reset/:token').put(resetPassword)
