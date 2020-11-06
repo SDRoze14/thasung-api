@@ -33,7 +33,7 @@ const UserSchema=new mongoose.Schema(
     role: {
       type: String,
       enum: {
-        values: ['super','doctor','nurse'],
+        values: ['admin','doctor','nurse', 'assistant'],
         message: 'กรุณาเลือกสิทธิ์ในการเข้าถึงข้อมูล'
       },
       default: 'nurse'
