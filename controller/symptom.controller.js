@@ -29,6 +29,7 @@ exports.newSymptom = catchAsyncErrors(async(req, res, next) => {
 
   req.body.create_by = req.user.id
   req.body.name_create = `${req.user.title} ${req.user.first} ${req.user.last}`
+  req.body.doctor_id = req.user.doctor_id
   await Symptom.create(req.body)
   .then(async response => {
     await Queue.create({

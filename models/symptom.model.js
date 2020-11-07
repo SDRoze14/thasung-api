@@ -27,6 +27,10 @@ const SymptomSchema = new mongoose.Schema(
       type: String,
       ref: 'User'
     },
+    doctor_id: {
+      type: String,
+      ref: 'User'
+    },
     initial_by: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
