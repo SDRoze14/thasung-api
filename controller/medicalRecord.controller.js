@@ -43,23 +43,29 @@ exports.getMedicalRecord=catchAsyncErrors(async (req,res,next) => {
 
 exports.newMedicalRecord=catchAsyncErrors(async (req,res,next) => {
 
-  req.body.record_by=req.user.id
-  await MedicalRecord.create(req.body)
-    .then(async response => {
-      await Activities.create({
-        activities: 'add',
-        from: 'medical-record',
-        data: response,
-        data_id: response.id,
-        act_by: req.user.id
-      }).then(() => {
-        res.status(200).json({
-          sucess: true,
-          message: 'Medical Record created',
+  const medicalracord=await MedicalRecord.findOne({citizen_id: req.body.citizen_id})
+
+  if(medicalracord) {
+    return next(new ErrorHandler('หมายเลขบัตรประชาชนนี้มีในระบบแล้ว',403))
+  } else {
+    req.body.record_by=req.user.id
+    await MedicalRecord.create(req.body)
+      .then(async response => {
+        await Activities.create({
+          activities: 'add',
+          from: 'medical-record',
           data: response,
+          data_id: response.id,
+          act_by: req.user.id
+        }).then(() => {
+          res.status(200).json({
+            sucess: true,
+            message: 'Medical Record created',
+            data: response,
+          })
         })
       })
-    })
+  }
 })
 
 exports.updateMedicalRecord=catchAsyncErrors(async (req,res,next) => {
