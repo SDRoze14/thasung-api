@@ -1,13 +1,9 @@
 const mongoose = require('mongoose')
 
 const AppointmentSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'กรุณากรอกชื่องาน']
-  },
   medical_name: {
     type: String,
-    default: null
+    required: [true, 'กรุณากรอกชื่องาน']
   },
   description: String,
   start: {

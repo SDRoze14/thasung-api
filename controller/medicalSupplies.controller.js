@@ -1,20 +1,20 @@
-const MedicalSupplies = require('../models/medicalSupplies.model')
-const Activities = require('../models/activities.model')
+const MedicalSupplies=require('../models/medicalSupplies.model')
+const Activities=require('../models/activities.model')
 
-const ErrorHandler = require('../utils/errorHandler')
-const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
-const APIFilters = require('../utils/apifilters')
+const ErrorHandler=require('../utils/errorHandler')
+const catchAsyncErrors=require('../middlewares/catchAsyncErrors')
+const APIFilters=require('../utils/apifilters')
 
 
 // Get All Medical Supplies
-exports.getAllMedicalSupplies = catchAsyncErrors(async(req, res, next) => {
-  const apifilters = new APIFilters(MedicalSupplies.find(), req.query)
+exports.getAllMedicalSupplies=catchAsyncErrors(async (req,res,next) => {
+  const apifilters=new APIFilters(MedicalSupplies.find(),req.query)
     .filter()
     .sort()
     .limitFields()
     .searchByQuery()
 
-  const medicalSupplies = await apifilters.query
+  const medicalSupplies=await apifilters.query
 
   res.status(200).json({
     success: true,
@@ -23,32 +23,40 @@ exports.getAllMedicalSupplies = catchAsyncErrors(async(req, res, next) => {
   })
 })
 
-exports.newMedicalSupply = catchAsyncErrors(async(req, res, next) => {
-  req.body.amount = await req.body.total
-  req.body.price_total = await req.body.total * req.body.price_for_unit
-  await MedicalSupplies.create(req.body)
-    .then(async response => {
-      await Activities.create({
-        activities: 'add',
-        from: 'medical-supply',
-        data: response,
-        data_id: response.id,
-        act_by: req.user.id
-      }).then(() => {
-        res.status(200).json({
-          success: true,
-          message: 'Medical Supply created',
+exports.newMedicalSupply=catchAsyncErrors(async (req,res,next) => {
+
+  const medicalsupply = await MedicalSupplies.findOne({medical_name: req.body.medical_name, number: req.body.number})
+
+  if(medicalsupply) {
+    // res.json({medicalsupply})
+    return next(new ErrorHandler(`เวชภัณฑ์ ${req.body.medical_name} มีในคลังแล้ว`, 403))
+  } else {
+    req.body.amount=await req.body.total
+    req.body.price_total=await req.body.total*req.body.price_for_unit
+    await MedicalSupplies.create(req.body)
+      .then(async response => {
+        await Activities.create({
+          activities: 'add',
+          from: 'medical-supply',
           data: response,
+          data_id: response.id,
+          act_by: req.user.id
+        }).then(() => {
+          res.status(200).json({
+            success: true,
+            message: 'Medical Supply created',
+            data: response,
+          })
         })
       })
-    })
+  }
 })
 
-exports.getMedicalSupplies = catchAsyncErrors(async(req, res, next) => {
-  const medicalSupplies = await MedicalSupplies.findById(req.params.id)
+exports.getMedicalSupplies=catchAsyncErrors(async (req,res,next) => {
+  const medicalSupplies=await MedicalSupplies.findById(req.params.id)
 
-  if(!medicalSupplies || medicalSupplies.length === 0) {
-    return next(new ErrorHandler('Midical Supply not found', 404))
+  if(!medicalSupplies||medicalSupplies.length===0) {
+    return next(new ErrorHandler('Midical Supply not found',404))
   }
 
   res.status(200).json({
@@ -57,18 +65,18 @@ exports.getMedicalSupplies = catchAsyncErrors(async(req, res, next) => {
   })
 })
 
-exports.updateAmountMedicalSupply = catchAsyncErrors(async(req, res, next) => {
-  let medicalSupplies = await MedicalSupplies.findById(req.params.id)
+exports.updateAmountMedicalSupply=catchAsyncErrors(async (req,res,next) => {
+  let medicalSupplies=await MedicalSupplies.findById(req.params.id)
 
   if(!medicalSupplies) {
-    return next(new ErrorHandler('Medical Supply not found', 404))
+    return next(new ErrorHandler('Medical Supply not found',404))
   }
 
-  req.body.update_at = await Date.now()
-  req.body.total  = await medicalSupplies.total + req.body.amount
-  req.body.price_total = await req.body.amount * medicalSupplies.price_for_unit
+  req.body.update_at=await Date.now()
+  req.body.total=await medicalSupplies.total+req.body.amount
+  req.body.price_total=await req.body.amount*medicalSupplies.price_for_unit
 
-  await MedicalSupplies.findByIdAndUpdate(req.params.id, req.body, {
+  await MedicalSupplies.findByIdAndUpdate(req.params.id,req.body,{
     new: true,
     runValidators: true,
     useFindAndModify: false
@@ -89,18 +97,18 @@ exports.updateAmountMedicalSupply = catchAsyncErrors(async(req, res, next) => {
   })
 })
 
-exports.updateMedicalSupply = catchAsyncErrors(async(req, res, next) => {
-  let medicalSupplies = await MedicalSupplies.findById(req.params.id)
-  req.body.amount = await 0;
-  req.body.price_total = await 0
+exports.updateMedicalSupply=catchAsyncErrors(async (req,res,next) => {
+  let medicalSupplies=await MedicalSupplies.findById(req.params.id)
+  req.body.amount=await 0;
+  req.body.price_total=await 0
 
   if(!medicalSupplies) {
-    return next(new ErrorHandler('Medical Supply not found', 404))
+    return next(new ErrorHandler('Medical Supply not found',404))
   }
 
-  req.body.update_at = await Date.now()
+  req.body.update_at=await Date.now()
 
-  await MedicalSupplies.findByIdAndUpdate(req.params.id, req.body, {
+  await MedicalSupplies.findByIdAndUpdate(req.params.id,req.body,{
     new: true,
     runValidators: true,
     useFindAndModify: false
@@ -121,11 +129,11 @@ exports.updateMedicalSupply = catchAsyncErrors(async(req, res, next) => {
   })
 })
 
-exports.deleteMedicalSupply = catchAsyncErrors(async(req, res, next) => {
-  let medicalSupplies = await MedicalSupplies.findById(req.params.id)
+exports.deleteMedicalSupply=catchAsyncErrors(async (req,res,next) => {
+  let medicalSupplies=await MedicalSupplies.findById(req.params.id)
 
-  if (!medicalSupplies) {
-    return next(new ErrorHandler('Mediacal Supply not found', 404))
+  if(!medicalSupplies) {
+    return next(new ErrorHandler('Mediacal Supply not found',404))
   } else {
     await MedicalSupplies.findByIdAndDelete(req.params.id)
       .then(async response => {

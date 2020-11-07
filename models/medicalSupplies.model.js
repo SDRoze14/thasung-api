@@ -14,7 +14,7 @@ const MedicalSupplies = new mongoose.Schema({
   },
   number: {
     type: String,
-    default: null
+    required: [true, 'กรุณากรอกเลขรุ่น']
   },
   creator: {
     type: String,
