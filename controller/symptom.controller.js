@@ -29,7 +29,7 @@ exports.newSymptom = catchAsyncErrors(async(req, res, next) => {
 
   req.body.create_by = req.user.id
   req.body.name_create = `${req.user.title} ${req.user.first} ${req.user.last}`
-  req.body.doctor_id = req.user.doctor_id
+  req.body.doctor_id = ''
   await Symptom.create(req.body)
   .then(async response => {
     await Queue.create({
@@ -77,6 +77,7 @@ exports.updateSymptom = catchAsyncErrors(async(req, res, next) => {
   req.body.predicate_by = req.user.id
   req.body.predicate_at = new Date()
   req.body.name_predicate = `${req.user.title} ${req.user.first} ${req.user.last}`
+  req.body.doctor_id = req.user.doctor_id
   const symptom = await Symptom.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
