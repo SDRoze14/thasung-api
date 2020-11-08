@@ -49,6 +49,14 @@ const SymptomSchema = new mongoose.Schema(
       ref: 'User',
       default: null
     },
+    certificatr: {
+      type: Boolean,
+      default: false
+    },
+    appointment: {
+      type: Boolean,
+      default: false
+    }
   },
   {
     toJSON: {virtuals: true},
