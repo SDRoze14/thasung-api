@@ -49,7 +49,7 @@ const SymptomSchema = new mongoose.Schema(
       ref: 'User',
       default: null
     },
-    certificatr: {
+    certificate: {
       type: Boolean,
       default: false
     },
