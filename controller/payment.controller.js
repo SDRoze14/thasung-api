@@ -12,7 +12,7 @@ exports.newPayment = catchAsyncErrors(async(req, res, next) => {
     return next(new ErrorHandler('เกิดข้อมูลผิดพลาด กรุณาลองใหม่อีกครั้ง'))
   } else {
     req.body.user = await req.user.id
-    req.body.symptom = symptom._id
+    // req.body.symptom = symptom._id
 
     const payment = await Payment.create(req.body)
 
