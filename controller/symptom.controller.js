@@ -5,7 +5,6 @@ const Queue = require('../models/queue.model')
 const ErrorHandler = require('../utils/errorHandler')
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 const APIFilters = require('../utils/apifilters')
-const {errorMonitor}=require('nodemailer/lib/mailer')
 
 let i = 0
 let date = new Date().getDate()

@@ -72,6 +72,7 @@ const Symptom = require('./routes/symptom.router')
 const Queue = require('./routes/queue.router')
 const DrugList = require('./routes/drugLIst.router')
 const Appointment = require('./routes/appointment.router')
+const Payment = require('./routes/payment.router')
 
 app.use('/api/v1', medicalRecord)
 app.use('/api/v1', auth)
@@ -82,6 +83,7 @@ app.use('/api/v1', Symptom)
 app.use('/api/v1', Queue)
 app.use('/api/v1', DrugList)
 app.use('/api/v1', Appointment)
+app.use('/api/v1', Payment)
 
 // -------------------------
 app.all('*', (req, res, next) => {
