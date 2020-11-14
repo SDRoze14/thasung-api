@@ -18,6 +18,9 @@ const DrugListSchema = new mongoose.Schema({
   price: {
     type: Number
   },
+  price_for_unit: {
+    type: Number
+  },
   status: {
     type: Boolean,
     default: false

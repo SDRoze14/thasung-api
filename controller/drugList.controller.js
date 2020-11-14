@@ -14,6 +14,8 @@ exports.newDrugList = catchAsyncErrors(async (req,res,next) => {
   const drug_symptom = await DrugList.find({symptom_id: req.body.symptom_id})
   const supply_id = await DrugList.find({supply_id: req.body.supply_id,symptom_id: req.body.symptom_id})
 
+  req.body.price = req.body.price_for_unit*req.body.amount
+
   if(drug_symptom.length===0) {
     await DrugList.create(req.body)
       .then(async response => {
