@@ -7,12 +7,12 @@ const catchAsyncErrors=require('../middlewares/catchAsyncErrors')
 const APIFilters=require('../utils/apifilters')
 const {response}=require('express')
 
-exports.newDrugList=catchAsyncErrors(async (req,res,next) => {
-  req.body.order_by=await req.user.id
-  req.body.order_by_name=await `${req.user.title} ${req.user.first} ${req.user.last}`
+exports.newDrugList = catchAsyncErrors(async (req,res,next) => {
+  req.body.order_by = await req.user.id
+  req.body.order_by_name = await `${req.user.title} ${req.user.first} ${req.user.last}`
 
-  const drug_symptom=await DrugList.find({symptom_id: req.body.symptom_id})
-  const supply_id=await DrugList.find({supply_id: req.body.supply_id,symptom_id: req.body.symptom_id})
+  const drug_symptom = await DrugList.find({symptom_id: req.body.symptom_id})
+  const supply_id = await DrugList.find({supply_id: req.body.supply_id,symptom_id: req.body.symptom_id})
 
   if(drug_symptom.length===0) {
     await DrugList.create(req.body)
@@ -77,7 +77,7 @@ exports.paidDrug=catchAsyncErrors(async (req,res,next) => {
         let drug_id=await response.supply_id
         await MedicalSupplies.findById(drug_id)
           .then(async resp => {
-            let total_amount=await resp.total-response.amount
+            let total_amount = await resp.total-response.amount
             await MedicalSupplies.findByIdAndUpdate(drug_id,{total: total_amount},{
               new: true,
               runValidators: true,

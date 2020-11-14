@@ -15,6 +15,9 @@ const DrugListSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'กรุณากรอกจำนวนยา']
   },
+  price: {
+    type: Number
+  },
   status: {
     type: Boolean,
     default: false
