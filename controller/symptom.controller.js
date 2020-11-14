@@ -60,7 +60,7 @@ exports.getSymptom = catchAsyncErrors(async(req, res, next) => {
   })
   .populate({
     path: 'drugPush',
-    select: 'name_drug amount status order_by_name order_at paid_at paid_by_name'
+    select: 'name_drug amount status price_for_unit price order_by_name order_at paid_at paid_by_name'
   })
 
   if(!symptom||symptom.length===0) {
