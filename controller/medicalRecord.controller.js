@@ -11,7 +11,6 @@ exports.getAllMedicalRecord=catchAsyncErrors(async (req,res,next) => {
     .sort()
     .limitFields()
     .searchByQuery()
-    .pagination()
 
   const medicalRecodes=await apifilters.query
 
