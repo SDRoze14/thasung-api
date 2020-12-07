@@ -30,10 +30,7 @@ const MedicalSupplies = new mongoose.Schema({
   },
   unit: {
     type: String,
-    enum: {
-      values: ['เม็ด', 'แผง', 'หลอด', 'ขวด', 'ซอง', 'โดส', 'แคปซูล'],
-      message: 'กรุณาดลือกหน่วยยา'
-    }
+    required: true
   },
   date_add: {
     type: Date,
