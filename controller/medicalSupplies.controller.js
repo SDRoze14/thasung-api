@@ -55,6 +55,9 @@ exports.newMedicalSupply=catchAsyncErrors(async (req,res,next) => {
 exports.getMedicalSupplies=catchAsyncErrors(async (req,res,next) => {
   const medicalSupplies=await MedicalSupplies.findById(req.params.id)
 
+  req.body.total=await medicalSupplies.total+req.body.amount
+  req.body.price_total=await req.body.amount*medicalSupplies.price_for_unit
+
   if(!medicalSupplies||medicalSupplies.length===0) {
     return next(new ErrorHandler('Midical Supply not found',404))
   }
