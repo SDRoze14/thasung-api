@@ -6,7 +6,10 @@ const catchAsyncErrors=require('../middlewares/catchAsyncErrors')
 const APIFilters=require('../utils/apifilters')
 
 exports.getAllMedicalRecord=catchAsyncErrors(async (req,res,next) => {
-  const apifilters=new APIFilters(MedicalRecord.find(),req.query)
+  const apifilters=new APIFilters(MedicalRecord.find().populate({
+    path: 'record_by',
+    select: 'first last title'
+  }),req.query)
     .filter()
     .sort()
     .limitFields()
@@ -47,11 +50,11 @@ exports.newMedicalRecord=catchAsyncErrors(async (req,res,next) => {
   if(medicalracord) {
     return next(new ErrorHandler('หมายเลขบัตรประชาชนนี้มีในระบบแล้ว',403))
   } else {
-    let date = new Date()
-    let now = date.getUTCFullYear()
-    let birth = new Date(req.body.birth).getUTCFullYear()
-    req.body.age= now - birth
-    req.body.record_by = req.user.id
+    let date=new Date()
+    let now=date.getUTCFullYear()
+    let birth=new Date(req.body.birth).getUTCFullYear()
+    req.body.age=now-birth
+    req.body.record_by=req.user.id
     await MedicalRecord.create(req.body)
       .then(async response => {
         await Activities.create({
