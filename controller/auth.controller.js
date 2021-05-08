@@ -80,7 +80,7 @@ exports.forgotPassword = catchAsyncErrors(async(req, res, next) => {
   try {
     await sendEmail({
       email: user.email,
-      suject: 'Password Recovery',
+      subject: 'Tha Sung Clinic : Password Recovery',
       message
     });
 
