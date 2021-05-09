@@ -32,6 +32,9 @@ const MedicalSupplies = new mongoose.Schema({
     type: String,
     required: true
   },
+  other_unit: {
+    type: String,
+  },
   date_add: {
     type: Date,
     required: [true, 'กรุณาเลือกวัน/เดือน/ปีเข้าคลัง']
