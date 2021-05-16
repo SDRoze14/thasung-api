@@ -50,10 +50,10 @@ exports.newMedicalRecord=catchAsyncErrors(async (req,res,next) => {
   if(medicalracord) {
     return next(new ErrorHandler('หมายเลขบัตรประชาชนนี้มีในระบบแล้ว',403))
   } else {
-    let date=new Date()
-    let now=date.getUTCFullYear()
-    let birth=new Date(req.body.birth).getUTCFullYear()
-    req.body.age=now-birth
+    // let date=new Date()
+    // let now=date.getUTCFullYear()
+    // let birth=new Date(req.body.birth).getUTCFullYear()
+    req.body.age= ""
     req.body.record_by=req.user.id
     await MedicalRecord.create(req.body)
       .then(async response => {
