@@ -24,7 +24,7 @@ const MedicalRecordSchema=new mongoose.Schema(
       minlength: [13,'หมายเลขประจำตัวประชาชนไม่ถูกต้อง']
     },
     birth: {
-      type: Date,
+      type: String,
       required: [true,'กรุณาเลือกวัน เดือน ปีเกิด']
     },
     age: {
