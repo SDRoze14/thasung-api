@@ -92,6 +92,9 @@ exports.paidDrug=catchAsyncErrors(async (req,res,next) => {
                   data: {
                     medical_name: response.name_drug,
                     type4: sup_res.type4,
+                    unit: sup_res.unit,
+                    price_for_unit: sup_res.price_for_unit,
+                    unit: sup_res.unit,
                     order_at: response.order_at,
                     amount: response.amount,
                     status: response.status,
