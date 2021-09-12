@@ -8,13 +8,9 @@ const PaymentSchema = new mongoose.Schema({
   total_price: {
     type: Number,
   },
-  treatment_cost: {
-    type: Number,
-    required: [true, 'กรุณากรอกค่าการรักษา']
-  },
-  treatment_title: {
-    type: String,
-    required: [true, 'กรุณากรอกรายละเอียดการรักษา']
+  treatment: {
+    type: Array,
+    default: []
   },
   create_at: {
     type: Date,
